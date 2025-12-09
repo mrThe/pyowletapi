@@ -295,3 +295,21 @@ class Sock:
         )
 
         return True if response else False
+
+    async def acknowledge_alert(self) -> bool:
+        """
+        Sends the command used by the official app to pause an active alert.
+
+        Returns
+        -------
+        (bool):Was the command successful
+        """
+
+        payload = json.dumps({"ts": int(time.time())})
+        data = {"datapoint": {"metadata": {}, "value": payload}}
+
+        response = await self._api.post_command(
+            self.serial, "ALRT_PAUSE_CMD", data
+        )
+
+        return bool(response)
