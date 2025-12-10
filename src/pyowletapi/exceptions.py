@@ -16,3 +16,11 @@ class OwletCredentialsError(OwletError):
 
 class OwletDevicesError(OwletError):
     """when no devices are found."""
+
+
+class OwletEmailError(OwletCredentialsError):
+    """When the provided email is invalid or unknown."""
+
+
+class OwletPasswordError(OwletCredentialsError):
+    """When the provided password is invalid."""

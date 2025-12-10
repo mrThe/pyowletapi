@@ -10,6 +10,8 @@ from .exceptions import (
     OwletAuthenticationError,
     OwletConnectionError,
     OwletDevicesError,
+    OwletEmailError,
+    OwletPasswordError,
     OwletError,
 )
 from .const import REGION_INFO
@@ -165,6 +167,12 @@ class OwletAPI:
                     case 400:
                         message = response_json["error"]["message"]
                         match message.split(":")[0]:
+                            case "INVALID_EMAIL":
+                                raise OwletEmailError("Invalid email address")
+                            case "EMAIL_NOT_FOUND":
+                                raise OwletEmailError("Email not found")
+                            case "INVALID_PASSWORD":
+                                raise OwletPasswordError("Invalid password")
                             case "INVALID_LOGIN_CREDENTIALS":
                                 raise OwletCredentialsError(
                                     "Invalid login credentials",
